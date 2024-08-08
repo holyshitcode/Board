@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 0.5rem;
+            background-color: #4285f4;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3367d6;
+        }
+        .form-inline {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .form-inline input[type="text"] {
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Admin Page</h1>
+
+    <!-- Search Form -->
+    <form th:action="@{/admin}" method="get" class="form-inline">
+        <input type="text" name="username" placeholder="Search by username" th:value="${form.username}" class="form-control" />
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Members Table -->
+    <table>
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Current Grade</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="member : ${members}">
+            <td th:text="${member.username}">Username</td>
+            <td th:text="${member.memberGrade}">Grade</td>
+            <td>
+                <form th:action="@{/admin}" method="post" style="display:inline;">
+                    <input type="hidden" name="username" th:value="${member.username}" />
+                    <label>
+                        <select name="grade" class="form-control" required>
+                            <option value="GENERAL" th:selected="${member.memberGrade == 'GENERAL'}">General</option>
+                            <option value="ADMIN" th:selected="${member.memberGrade == 'ADMIN'}">Admin</option>
+                        </select>
+                    </label>
+                    <button type="submit">Update Grade</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

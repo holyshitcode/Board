@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 480px;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .py-5 {
+            padding-top: 2rem !important;
+            padding-bottom: 2rem !important;
+        }
+
+        h2 {
+            color: #4285f4;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+            margin-top: 5px;
+        }
+
+        .btn {
+            border-radius: 4px;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            background-color: #4285f4;
+            border-color: #4285f4;
+        }
+
+        .btn-primary:hover {
+            background-color: #3367d6;
+            border-color: #3367d6;
+        }
+
+        .btn-secondary {
+            background-color: #ea4335;
+            border-color: #ea4335;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d93025;
+            border-color: #d93025;
+        }
+
+        .form-control {
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 4px;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(66, 133, 244, 0.5);
+            border-color: #4285f4;
+        }
+
+        hr {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>로그인</h2>
+    </div>
+
+    <form action="item.html" th:action th:object="${loginForm}" method="post">
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+        </div>
+
+        <div>
+            <label for="loginId">로그인 ID</label>
+            <input type="text" id="loginId" th:field="*{loginId}" class="form-control" th:errorclass="field-error">
+            <div class="field-error" th:errors="*{loginId}"></div>
+        </div>
+
+        <div>
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" th:field="*{password}" class="form-control" th:errorclass="field-error">
+            <div class="field-error" th:errors="*{password}"></div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">로그인</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg" onclick="location.href='items.html'" th:onclick="|location.href='@{/}'|" type="button">취소</button>
+            </div>
+        </div>
+        <div>
+
+        </div>
+        <div>
+            <div class="text-center">
+                <a href="/member" class="btn btn-secondary btn-lg mt-3">회원가입</a>
+            </div>
+        </div>
+
+    </form>
+</div> <!-- /container -->
+</body>
+</html>

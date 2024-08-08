@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h2 {
+            color: #34a853;
+            font-size: 2.5rem;
+        }
+
+        h4 {
+            color: #5f6368;
+            font-size: 1.5rem;
+        }
+
+        .btn {
+            border-radius: 8px;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+            font-size: 1.5rem;
+            padding: 15px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #34a853;
+            border-color: #34a853;
+        }
+
+        .btn-primary:hover {
+            background-color: #2c8e47;
+            border-color: #2c8e47;
+        }
+
+        .btn-secondary {
+            background-color: #ea4335;
+            border-color: #ea4335;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d93025;
+            border-color: #d93025;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="text-center" style="margin-bottom: 40px;">
+        <h2>홈 화면</h2>
+    </div>
+
+    <div class="mb-3">
+        <h4 th:text="|UserName : ${member.username}|">로그인 사용자 이름</h4>
+    </div>
+
+    <hr class="my-4">
+    <div th:if="${member.memberGrade.toString() == 'ADMIN'}">
+        <a class="btn btn-secondary" th:href="@{/admin}" role="button">관리자 모드</a>
+    </div>
+
+    <div>
+        <button class="btn btn-primary btn-block" type="button" th:onclick="|location.href='@{/boards}'|">
+            게시글보기
+        </button>
+        <form th:action="@{/logout}" method="post">
+            <button class="btn btn-secondary btn-block" type="submit">
+                로그아웃
+            </button>
+        </form>
+    </div>
+
+    <hr class="my-4">
+</div> <!-- /container -->
+
+</body>
+</html>
