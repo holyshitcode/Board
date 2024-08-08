@@ -1,5 +1,6 @@
 package demo.jjboard.service;
 
+import demo.jjboard.controller.form.BoardCond;
 import demo.jjboard.controller.form.BoardForm;
 import demo.jjboard.entity.Board;
 import demo.jjboard.entity.Member;
@@ -66,6 +67,10 @@ public class BoardService {
         board.ifPresent(value -> value.editingBoard(member.getId(), boardForm.getBoardTitle(),
                 boardForm.getBoardWriter(), boardForm.getBoardContent()));
 
+    }
+
+    public List<Board> findBoardByCond(BoardCond cond) {
+        return boardRepository.findBoardByCond(cond);
     }
 
 }

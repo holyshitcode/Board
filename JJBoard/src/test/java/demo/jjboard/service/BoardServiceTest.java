@@ -1,5 +1,6 @@
 package demo.jjboard.service;
 
+import demo.jjboard.controller.form.BoardCond;
 import demo.jjboard.controller.form.BoardForm;
 import demo.jjboard.entity.Board;
 import demo.jjboard.entity.Member;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -91,5 +93,50 @@ class BoardServiceTest {
         assertThat(board.getBoardWriter()).isEqualTo(form.getBoardWriter());
         assertThat(board.getBoardContent()).isEqualTo(form.getBoardContent());
         assertThat(board.getMember().getId()).isEqualTo(member.getId());
+    }
+
+    @Test
+    @DisplayName("게시판 검색조건")
+    void search() {
+        Member member = new Member("tester");
+        memberService.save(member);
+        String title = "test title";
+        String writer = "hongildong";
+        String content = "test content";
+
+        Board board = new Board(member, title, writer, content);
+        Board board2 = new Board(member, title+"new", "gildong", content);
+        Board board3 = new Board(member, title+"new2", "gildong", "test test");
+        boardService.save(board);
+        boardService.save(board2);
+        boardService.save(board3);
+
+
+        BoardCond cond = new BoardCond();
+        cond.setName(title);
+
+
+        List<Board> foundBoard = boardService.findBoardByCond(cond);
+        assertThat(foundBoard.size()).isEqualTo(1);
+        assertThat(foundBoard).extracting("boardTitle").containsExactly(title);
+
+        boardService.findByIdWithCountUP(board2.getId());
+        BoardCond cond2 = new BoardCond();
+        cond2.setName(title+"new");
+        cond2.setHitCount(1);
+        List<Board> foundBoard2 = boardService.findBoardByCond(cond2);
+
+        assertThat(foundBoard2.size()).isEqualTo(1);
+        assertThat(foundBoard2).extracting("boardTitle").containsExactly(title+"new");
+        assertThat(foundBoard2.getFirst().getBoardHitCount()).isEqualTo(1);
+
+        BoardCond cond3 = new BoardCond();
+        cond3.setMemberName("tester");
+
+        List<Board> foundBoard3 = boardService.findBoardByCond(cond3);
+        assertThat(foundBoard3.size()).isEqualTo(3);
+        assertThat(foundBoard3.getFirst().getMember().getUsername()).isEqualTo("tester");
+        assertThat(foundBoard3).extracting("member.username").containsExactly("tester","tester","tester");
+
     }
 }

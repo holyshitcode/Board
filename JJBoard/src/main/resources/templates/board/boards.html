@@ -13,7 +13,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
             background-color: #fff;
@@ -93,6 +93,54 @@
             background-color: #d93025;
             border-color: #d93025;
         }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: #4285f4;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(66, 133, 244, 0.25);
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: calc(50% - 1rem);
+        }
+
+        .form-group.full-width {
+            min-width: 100%;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .form-group input[type="number"]::-webkit-inner-spin-button,
+        .form-group input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -103,12 +151,41 @@
         <a class="btn btn-primary" href="/board/save" role="button">새 게시글 작성</a>
     </div>
 
+    <!-- 검색 폼 추가 -->
+    <form action="#" th:action="@{/boards}" method="get" class="mt-4">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="name">제목:</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="제목을 입력하세요" />
+            </div>
+            <div class="form-group">
+                <label for="hitCount">조회수 이상:</label>
+                <input type="number" id="hitCount" name="hitCount" class="form-control" placeholder="조회수를 입력하세요" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="recommendation">추천수 이상:</label>
+                <input type="number" id="recommendation" name="recommendation" class="form-control" placeholder="추천수를 입력하세요" />
+            </div>
+            <div class="form-group">
+                <label for="notRecommendation">비추천수 이하:</label>
+                <input type="number" id="notRecommendation" name="notRecommendation" class="form-control" placeholder="비추천수를 입력하세요" />
+            </div>
+        </div>
+        <div class="form-group full-width">
+            <label for="memberName">작성자:</label>
+            <input type="text" id="memberName" name="memberName" class="form-control" placeholder="작성자 이름을 입력하세요" />
+        </div>
+        <button type="submit" class="btn btn-primary">검색</button>
+    </form>
+
     <div class="mt-4">
         <div th:each="board : ${boards}" class="board-item">
             <a th:href="@{/boards/{boardId}(boardId=${board.id})}" class="board-title" th:text="${board.boardTitle}"></a>
             <div class="board-content" th:text="${board.boardContent}"></div>
-            <div class="board-meta" th:text="'작성자: ' + ${board.getMember().getUsername()}"></div>
-            <div th:text="'조회수:' + ${board.boardHitCount}"></div>
+            <div class="board-meta" th:text="'작성자: ' + ${board.member.username}"></div>
+            <div th:text="'조회수: ' + ${board.boardHitCount}"></div>
         </div>
     </div>
 </div>

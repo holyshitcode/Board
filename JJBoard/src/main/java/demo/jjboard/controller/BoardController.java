@@ -1,6 +1,7 @@
 package demo.jjboard.controller;
 
 
+import demo.jjboard.controller.form.BoardCond;
 import demo.jjboard.controller.form.BoardForm;
 import demo.jjboard.entity.Board;
 import demo.jjboard.entity.Member;
@@ -9,6 +10,7 @@ import demo.jjboard.service.BoardService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class BoardController {
 
     private final BoardService boardService;
@@ -40,11 +43,20 @@ public class BoardController {
     }
 
     @GetMapping("/boards")
-    public String showBoards(Model model) {
-        List<Board> boards = boardService.findAll();
+    public String showBoards(@RequestParam(required = false) String name,
+                             @RequestParam(required = false) Integer hitCount,
+                             @RequestParam(required = false) Integer recommendation,
+                             @RequestParam(required = false) Integer notRecommendation,
+                             @RequestParam(required = false) String memberName,
+                             Model model) {
+        BoardCond cond = new BoardCond(name,memberName,hitCount,recommendation,notRecommendation);
+        log.info("cond={}",cond);
+        List<Board> boards = boardService.findBoardByCond(cond);
         model.addAttribute("boards", boards);
+        log.info("boards={}", boards.toString());
         return "board/boards";
     }
+
 
     @GetMapping("/boards/{boardId}")
     public String showBoard(@PathVariable Long boardId, Model model, HttpServletRequest request) {
