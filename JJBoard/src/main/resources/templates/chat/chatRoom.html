@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room Details</title>
+    <style>
+        /* Basic styles for the chat room detail page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .chat-room-info {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f4f4f4;
+        }
+        .chat-room-info p {
+            margin: 5px 0;
+        }
+        .messages {
+            margin-bottom: 20px;
+        }
+        .message {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            background: #fdfdfd;
+        }
+        .message:last-child {
+            border-bottom: none;
+        }
+        .message .author {
+            font-weight: bold;
+            color: #333;
+        }
+        .message .content {
+            margin-top: 5px;
+        }
+        .message-form {
+            margin-top: 20px;
+        }
+        .message-form input[type="text"] {
+            width: calc(100% - 90px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .message-form button {
+            width: 80px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .message-form button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .participant-list {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f4f4f4;
+        }
+        .participant-list h2 {
+            margin-top: 0;
+        }
+        .participant-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .participant-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .participant-list li:last-child {
+            border-bottom: none;
+        }
+        .chat-room-actions {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Chat Room Details</h1>
+    <div class="chat-room-info">
+        <p><strong>Chat Room ID:</strong> <span th:text="${chatRoom.id}"></span></p>
+        <p><strong>Creator:</strong> <span th:text="${chatRoom.leader}"></span></p>
+        <p><strong>Max Participants:</strong> <span th:text="${chatRoom.maxEnter}"></span></p>
+        <p><strong>Current Participants:</strong> <span th:text="${chatRoom.currentMembers}"></span></p>
+    </div>
+
+    <div class="messages">
+        <h2>Messages</h2>
+        <div th:each="message : ${chatRoom.messages}" class="message">
+            <p class="author" th:text="${message.member.username}"></p>
+            <p class="content" th:text="${message.messageContent}"></p>
+        </div>
+    </div>
+
+    <div class="message-form">
+        <form action="#" th:action="@{/chat/{chatId}(chatId=${chatRoom.id})}" method="post">
+            <label>
+                <input type="text" name="message" placeholder="Type your message here..." required />
+            </label>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <div class="participant-list">
+        <h2>Current Participants</h2>
+        <ul>
+            <li th:each="participant : ${chatRoom.members}" th:text="${participant.username}"></li>
+        </ul>
+    </div>
+
+    <div class="chat-room-actions">
+        <form action="#" th:action="@{/chat/{chatId}/exit(chatId=${chatRoom.id})}" method="post">
+            <button type="submit">Leave Chat Room</button>
+        </form>
+        <!-- Display delete button only if the logged-in user is the room creator -->
+        <div th:if="${chatRoom.leader == member.username}">
+            <form action="#" th:action="@{/chat/{chatId}/delete(chatId=${chatRoom.id})}" method="post" style="margin-top: 10px;">
+                <button type="submit" style="background-color: #dc3545; color: #fff;">Delete Chat Room</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="/chat/list">Back to Chat Rooms</a>
+</div>
+</body>
+</html>

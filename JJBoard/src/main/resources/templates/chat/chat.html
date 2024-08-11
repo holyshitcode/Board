@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Chat Room</title>
+    <style>
+        /* Basic styles for the chat creation form */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        label, input, button {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Create a Chat Room</h1>
+<form action="/chat" method="post">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+    <div>
+        <label for="max">Maximum Number of Participants:</label>
+        <input type="number" id="max" name="max" required>
+    </div>
+
+    <button type="submit">Create Chat Room</button>
+</form>
+<a href="/chat/list">View Chat Rooms</a>
+</body>
+</html>

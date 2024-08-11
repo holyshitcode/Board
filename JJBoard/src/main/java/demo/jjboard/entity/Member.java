@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Setter
@@ -23,6 +25,10 @@ public class Member {
     private String loginId;
 
     private String password;
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "chat_room_id")
+    private ChatRoom chatRoom;
 
     @Enumerated(EnumType.STRING)
     private MemberGrade memberGrade;

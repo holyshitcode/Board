@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Rooms</title>
+  <style>
+    /* Basic styles for the chat room list */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    a {
+      text-decoration: none;
+      color: blue;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<h1>Chat Rooms</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Chat Room ID</th>
+    <th>Creator</th>
+    <th>Current Member</th>
+    <th>Max Participants</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="chatRoom : ${chatRooms}">
+    <td>
+      <a th:href="@{/chat/{id}(id=${chatRoom.id})}" th:text="${chatRoom.id}"></a>
+    </td>
+    <td th:text="${chatRoom.leader}"></td>
+    <td th:text="${chatRoom.currentMembers}"></td>
+    <td th:text="${chatRoom.maxEnter}"></td>
+  </tr>
+  </tbody>
+</table>
+<a href="/chat">Create a New Chat Room</a>
+</body>
+</html>

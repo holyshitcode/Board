@@ -1,6 +1,7 @@
 package demo.jjboard.controller;
 
 
+import datadog.trace.api.Trace;
 import demo.jjboard.controller.form.BoardCond;
 import demo.jjboard.controller.form.BoardForm;
 import demo.jjboard.entity.Board;
@@ -27,6 +28,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
+
     @GetMapping("/board/save")
     public String boardShow(@ModelAttribute("boardForm") BoardForm boardForm,@ModelAttribute("member") Member member){
         return "board/boardSaveForm";
@@ -42,6 +44,7 @@ public class BoardController {
         return "redirect:/boards";
     }
 
+    @Trace(operationName = "boardList")
     @GetMapping("/boards")
     public String showBoards(@RequestParam(required = false) String name,
                              @RequestParam(required = false) Integer hitCount,

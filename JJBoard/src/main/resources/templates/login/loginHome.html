@@ -85,6 +85,9 @@
         <button class="btn btn-primary btn-block" type="button" th:onclick="|location.href='@{/boards}'|">
             게시글보기
         </button>
+        <button class="btn btn-primary btn-block" type="button" th:onclick="|location.href='@{/chat/list}'|">
+            채팅하기
+        </button>
         <form th:action="@{/logout}" method="post">
             <button class="btn btn-secondary btn-block" type="submit">
                 로그아웃
