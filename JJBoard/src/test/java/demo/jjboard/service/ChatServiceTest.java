@@ -31,7 +31,7 @@ class ChatServiceTest {
 
         ChatRoom foundChatRoom = chatService.findChatRoomById(chatRoomId);
 
-        chatService.enterRoom(foundChatRoom, member2);
+        chatService.enterRoom(foundChatRoom.getId(), member2);
 
         assertThat(foundChatRoom.getCurrentMembers()).isEqualTo(2);
         assertThat(foundChatRoom.getMembers()).extracting("username")
@@ -49,7 +49,7 @@ class ChatServiceTest {
 
         ChatRoom foundChatRoom = chatService.findChatRoomById(chatRoomId);
 
-        chatService.enterRoom(foundChatRoom, member2);
+        chatService.enterRoom(foundChatRoom.getId(), member2);
 
         String testMessage1 = "testMessage1";
         String testMessage2 = "testMessage2";
@@ -73,7 +73,7 @@ class ChatServiceTest {
 
         ChatRoom foundChatRoom = chatService.findChatRoomById(chatRoomId);
 
-        chatService.enterRoom(foundChatRoom, member2);
+        chatService.enterRoom(foundChatRoom.getId(), member2);
 
         assertThat(foundChatRoom.getCurrentMembers()).isEqualTo(1);
         assertThat(foundChatRoom.getMembers()).extracting("username").containsExactly("makingTest");
@@ -107,12 +107,13 @@ class ChatServiceTest {
 
         ChatRoom foundChatRoom = chatService.findChatRoomById(chatRoomId);
         System.out.println("foundChatRoom.getMembers() = " + foundChatRoom.getMembers());
-        chatService.enterRoom(foundChatRoom, member2);
+        chatService.enterRoom(foundChatRoom.getId(), member2);
         assertThat(foundChatRoom.getCurrentMembers()).isEqualTo(2);
         System.out.println("foundChatRoom.getMembers() = " + foundChatRoom.getMembers());
 
         chatService.leaveRoom(foundChatRoom.getId(),member2);
         System.out.println("foundChatRoom.getMembers() = " + foundChatRoom.getMembers());
         assertThat(foundChatRoom.getCurrentMembers()).isEqualTo(1);
+        assertThat(foundChatRoom.getMembers().size()).isEqualTo(1);
     }
 }

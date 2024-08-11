@@ -117,7 +117,7 @@
         <p><strong>Chat Room ID:</strong> <span th:text="${chatRoom.id}"></span></p>
         <p><strong>Creator:</strong> <span th:text="${chatRoom.leader}"></span></p>
         <p><strong>Max Participants:</strong> <span th:text="${chatRoom.maxEnter}"></span></p>
-        <p><strong>Current Participants:</strong> <span th:text="${chatRoom.currentMembers}"></span></p>
+        <p><strong>Current Participants:</strong> <span th:text="${chatRoom.getMembers().size()}"></span></p>
     </div>
 
     <div class="messages">

@@ -43,18 +43,16 @@ public class ChatService {
         }
     }
 
-    public boolean enterRoom(Long chatRoomId,Member member) {
+    public void enterRoom(Long chatRoomId, Member member) {
         Optional<ChatRoom> foundChatRoom = chatRoomRepository.findById(chatRoomId);
         if(foundChatRoom.isPresent()) {
             ChatRoom chatRoom = foundChatRoom.get();
             if (chatRoom.getCurrentMembers() < chatRoom.getMaxEnter() && chatRoomRepository.existsById(chatRoom.getId())) {
                 if (!chatRoom.getMembers().contains(member)) {
                     chatRoom.addCurrentMember(member);
-                    return true;
                 }
             }
         }
-        return false;
     }
 
     public void leaveRoom(Long chatRoomId, Member member) {

@@ -48,7 +48,7 @@
       <a th:href="@{/chat/{id}(id=${chatRoom.id})}" th:text="${chatRoom.id}"></a>
     </td>
     <td th:text="${chatRoom.leader}"></td>
-    <td th:text="${chatRoom.currentMembers}"></td>
+    <td th:text="${chatRoom.getMembers().size()}"></td>
     <td th:text="${chatRoom.maxEnter}"></td>
   </tr>
   </tbody>
