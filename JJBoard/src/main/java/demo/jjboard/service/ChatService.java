@@ -47,7 +47,7 @@ public class ChatService {
         Optional<ChatRoom> foundChatRoom = chatRoomRepository.findById(chatRoomId);
         if(foundChatRoom.isPresent()) {
             ChatRoom chatRoom = foundChatRoom.get();
-            if (chatRoom.getCurrentMembers() < chatRoom.getMaxEnter() && chatRoomRepository.existsById(chatRoom.getId())) {
+            if (chatRoom.getMembers().size() < chatRoom.getMaxEnter() && chatRoomRepository.existsById(chatRoom.getId())) {
                 if (!chatRoom.getMembers().contains(member)) {
                     chatRoom.addCurrentMember(member);
                 }

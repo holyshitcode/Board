@@ -117,7 +117,7 @@
         <p><strong>Chat Room ID:</strong> <span th:text="${chatRoom.id}"></span></p>
         <p><strong>Creator:</strong> <span th:text="${chatRoom.leader}"></span></p>
         <p><strong>Max Participants:</strong> <span th:text="${chatRoom.maxEnter}"></span></p>
-        <p><strong>Current Participants:</strong> <span th:text="${chatRoom.getMembers().size()}"></span></p>
+<!--        <p><strong>Current Participants:</strong> <span th:text="${chatRoom.getMembers().size()}"></span></p>-->
     </div>
 
     <div class="messages">
@@ -137,12 +137,12 @@
         </form>
     </div>
 
-    <div class="participant-list">
-        <h2>Current Participants</h2>
-        <ul>
-            <li th:each="participant : ${chatRoom.members}" th:text="${participant.username}"></li>
-        </ul>
-    </div>
+<!--    <div class="participant-list">-->
+<!--        <h2>Current Participants</h2>-->
+<!--        <ul>-->
+<!--            <li th:each="participant : ${chatRoom.getMembers()}" th:text="${participant.username}"></li>-->
+<!--        </ul>-->
+<!--    </div>-->
 
     <div class="chat-room-actions">
         <form action="#" th:action="@{/chat/{chatId}/exit(chatId=${chatRoom.id})}" method="post">

@@ -22,7 +22,7 @@ public class ChatRoom extends BaseEntity{
     @OneToMany(mappedBy = "chatRoom")
     private List<Member> members = new ArrayList<>();
 
-    @OneToMany(mappedBy = "chatRoom")
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
 
     private int maxEnter; //최대입장 인원수
