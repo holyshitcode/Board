@@ -1,12 +1,9 @@
 package demo.jjboard.repository.custom;
 
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import demo.jjboard.controller.form.BoardCond;
 import demo.jjboard.entity.Board;
-import demo.jjboard.entity.QBoard;
-import demo.jjboard.entity.QMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

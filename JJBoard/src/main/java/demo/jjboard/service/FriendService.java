@@ -8,6 +8,7 @@ import demo.jjboard.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,7 +29,11 @@ public class FriendService {
         Member addMember = memberRepository.findById(friendId).orElseGet(null);
 
         member.getFriend().getFriends().add(addMember);
-
-
     }
+
+    public List<Member> getFriendsList(Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseGet(null);
+        return member.getFriend().getFriends();
+    }
+
 }

@@ -43,8 +43,10 @@ public class AdminController {
         if (grade.equals(MemberGrade.GENERAL.toString())) {
             adminService.changeGradeToGeneral(foundMember);
         }
+
         return "redirect:/admin";
     }
+
 
 
 }
