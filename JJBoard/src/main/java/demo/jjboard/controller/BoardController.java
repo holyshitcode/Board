@@ -8,6 +8,7 @@ import demo.jjboard.entity.Board;
 import demo.jjboard.entity.Member;
 import demo.jjboard.entity.session.SessionConst;
 import demo.jjboard.service.BoardService;
+import demo.jjboard.service.MarkdownService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ import java.util.Optional;
 public class BoardController {
 
     private final BoardService boardService;
+    private final MarkdownService mkService;
 
 
     @GetMapping("/board/save")
@@ -38,8 +40,14 @@ public class BoardController {
     public String boardSave(@ModelAttribute("boardForm") BoardForm boardForm,
                             HttpServletRequest request,Model model){
         Member sessionMember = getSessionMember(request);
-        Board board = saveBoard(boardForm, request);
+
+        // 마크다운 내용을 HTML로 변환
+        String htmlContent = mkService.renderMarkdownToHtml(boardForm.getBoardContent());
+
+        // 변환된 HTML로 게시글을 저장
+        Board board = saveBoard(boardForm, htmlContent, request);
         boardService.save(board);
+
         model.addAttribute("member", sessionMember);
         return "redirect:/boards";
     }
@@ -79,9 +87,9 @@ public class BoardController {
         return "redirect:/boards/{boardId}";
     }
 
-    private static Board saveBoard(BoardForm boardForm, HttpServletRequest request) {
+    private static Board saveBoard(BoardForm boardForm, String htmlContent, HttpServletRequest request) {
         Member member = getSessionMember(request);
-        return new Board(member, boardForm.getBoardTitle(), boardForm.getBoardWriter(), boardForm.getBoardContent());
+        return new Board(member, boardForm.getBoardTitle(), boardForm.getBoardWriter(), htmlContent, boardForm.getBoardGeneralChat());
     }
 
     @GetMapping("/boards/edit/{boardId}")

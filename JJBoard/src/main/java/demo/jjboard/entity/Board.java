@@ -24,7 +24,10 @@ public class Board extends BaseEntity {
 
     private String boardWriter;
 
+    @Lob
     private String boardContent;
+
+    private String boardGeneralChat;
 
     private int boardHitCount; //조회수
 
@@ -34,11 +37,12 @@ public class Board extends BaseEntity {
 
 
 
-    public Board(Member member, String boardTitle, String boardWriter, String boardContent) {
+    public Board(Member member, String boardTitle, String boardWriter, String boardContent, String boardGeneralChat) {
         this.member = member;
         this.boardTitle = boardTitle;
         this.boardWriter = boardWriter;
         this.boardContent = boardContent;
+        this.boardGeneralChat = boardGeneralChat;
     }
 
     public void editingBoard(Long memberId, String boardTitle, String boardWriter, String boardContent) {

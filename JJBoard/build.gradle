@@ -38,7 +38,8 @@ dependencies {
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-
+    //markdown
+    implementation 'com.vladsch.flexmark:flexmark-all:0.62.2'
     implementation 'com.datadoghq:dd-trace-api:1.38.0'
 
 }

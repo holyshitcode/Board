@@ -183,12 +183,13 @@
     <div class="mt-4">
         <div th:each="board : ${boards}" class="board-item">
             <a th:href="@{/boards/{boardId}(boardId=${board.id})}" class="board-title" th:text="${board.boardTitle}"></a>
-            <div class="board-content" th:text="${board.boardContent}"></div>
             <div class="board-meta" th:text="'작성자: ' + ${board.member.username}"></div>
             <div th:text="'조회수: ' + ${board.boardHitCount}"></div>
         </div>
     </div>
 </div>
-
+<!-- Highlight.js 추가 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
 </body>
 </html>

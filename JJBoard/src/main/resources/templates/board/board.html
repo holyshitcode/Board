@@ -2,7 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -85,7 +88,10 @@
         <div th:text="'조회수:' + ${board.boardHitCount}"></div>
         <h2 class="board-title" th:text="${board.boardTitle}"></h2>
         <div class="board-meta" th:text="'작성자: ' + ${board.getMember().username}"></div>
-        <div class="board-content" th:text="${board.boardContent}"></div>
+
+        <!-- 위쪽 코드도 <pre><code> 태그로 변경 -->
+        <pre><code class="language-java" th:utext="${board.boardContent}"></code></pre>
+        <div class="board-generalChat" th:text="${board.boardGeneralChat}"></div>
     </div>
 
     <form th:action="@{/boards/{boardId}(boardId=${board.id})}" method="post">
@@ -102,9 +108,16 @@
     </div>
 </div>
 
-    <a class="btn btn-secondary" href="/boards" role="button">목록으로 돌아가기</a>
+<a class="btn btn-secondary" href="/boards" role="button">목록으로 돌아가기</a>
 
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightElement(block);
+        });
+    });
+</script>
 </body>
 </html>

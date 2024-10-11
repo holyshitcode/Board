@@ -8,5 +8,6 @@ public class BoardForm {
     private String boardTitle;
     private String boardWriter;
     private String boardContent;
+    private String boardGeneralChat;
 
 }

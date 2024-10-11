@@ -66,6 +66,12 @@
             <label for="boardContent">내용</label>
             <textarea id="boardContent" th:field="*{boardContent}" class="form-control" rows="5"></textarea>
         </div>
+
+        <div>
+            <label for="boardGeneralChat">내용</label>
+            <textarea id="boardGeneralChat" th:field="*{boardGeneralChat}" class="form-control" rows="6" th:errorclass="field-error"></textarea>
+            <div class="field-error" th:errors="*{boardGeneralChat}"></div>
+        </div>
         <button type="submit" class="btn btn-primary">수정하기</button>
     </form>
 </div>
